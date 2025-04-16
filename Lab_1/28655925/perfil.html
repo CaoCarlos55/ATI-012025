@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carlos Cao</title>
+    <link rel="icon" href="http://www.ciens.ucv.ve/portalasig2/favicon.ico" type="image/x-con">
+    <style>
+        body {
+            margin: 0;
+            padding: 50px;
+        }
+        .Principal {
+            display: flex;
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: white;
+            gap: 3px;
+            align-items: flex-start;
+        }
+        
+        .Cuadro {
+            flex: 1;
+            padding: 10px;
+            min-height: 300px; 
+            border: 1px solid #000000 ;
+            box-shadow: 4px 4px 0 0 rgba(0, 0, 0, 0.5);
+            
+        }
+        .Cuadro-Imagen {
+            width: 200px;
+            height: auto; 
+            display: flex;
+            align-self: stretch;
+        }
+        .Perfil {
+            width: 100%;
+            height: 100%;
+            border-top-left-radius: 50px;
+            object-fit: cover;
+
+        }
+        .nombre{
+            color: orange;
+            margin-top: 0;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        .correo {
+            color: orange;
+            text-decoration: none;
+        }
+        .correo:hover {
+            text-decoration: underline;
+        }
+        .Texto {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+    </style>
+
+    <!--Script para cambiar el color despues de darle click-->
+    <script>
+        function cambiarColor(link) {
+            link.style.color = 'red'; 
+        }
+    </script>
+</head>
+
+<body>
+   <div class="Principal">
+    <div class="Cuadro-Imagen">
+        <img src="28655925.jpg" alt="Carlos Cao" class="Perfil">
+
+    </div>
+    
+    <div class="Cuadro"> 
+        <h2 class="nombre">Carlos Cao</h2>
+        <div class="Texto">
+            <p><i>Soy estudiante de la Licenciatura en Computación en la UCV. Actualmente curso el sexto semestre de la carrera y me apasionan 
+            todas las materias relacionadas con las matemáticas, especialmente Cálculo Científico y Matemáticas II. Además, me desempeño como 
+            preparador de la asignatura Matemáticas Discretas III. En mi tiempo libre, disfruto jugando videojuegos.
+            </i></p>
+        </div>
+
+        <table>
+            <tr>
+                <td width="250px">Mi color favorito es:</td>
+                <td>Naranja, Azul Oscuro</td>
+            </tr>
+            <tr>
+                <td width="250px">Mi libro favorito es:</td>
+                <td>Ninguno</td>
+            </tr>
+            <tr>
+                <td width="250px">Mi estilo de música preferida:</td>
+                <td>Cualquiera menos regueton</td>
+            </tr>
+            <tr>
+                <td width="250px">Video juegos favoritos:</td>
+                <td>Todos los juegos de Pokemón, Pubg Mobile</td>
+            </tr>
+            <tr>
+                <td width="250px"><b>Lenguajes aprendidos:</b></td>
+                <td><b>C++, C, Python, Java</b></td>
+            </tr>
+        </table>
+        <p>Si necesitan comunicarse conmigo me pueden escribir a: <a href="mailto:caocarlos50@gmail.com" class="correo" onclick="cambiarColor(this)">caocarlos50@gmail.com</a></p>
+    </div>
+   </div> 
+</body>
+</html>
