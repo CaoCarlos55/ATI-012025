@@ -80,7 +80,7 @@ nav {
 
 }
 .lista-encabezado li {
-    background-color: #6a9bd8; /* Color más oscuro para los cuadros */
+    background-color: #6a9bd8; 
     padding: 15px;
     flex: 1;
     text-align: center;
@@ -154,14 +154,16 @@ section {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 180px; /* Ancho fijo */
+    width: 180px; 
     height: 180px;
     padding: 15px 10px;
     background-color: #f4f6f8;
-    border-right: 2px solid #c3c4c8; /* Línea delgada derecha */
+    border-right: 2px solid #c3c4c8; 
     border-bottom: 2px solid #c3c4c8;
     position: relative;
     text-align: center;
+    transition: all 0.2s ease;
+    cursor: pointer;
 
 }
 .estudiante p {
@@ -170,6 +172,8 @@ section {
     color: #7babdd;
     text-align: center;
     font-weight: bold;
+    transition: all 0.2s ease;
+    cursor: pointer;
 }
 .est {
     margin-top: 10px;
@@ -177,7 +181,23 @@ section {
     width: auto;
     height: 150px;
     object-fit: cover;
+    transition: all 0.2s ease;
+    cursor: pointer;
 
+}
+.estudiante:hover {
+    background-color: #99c5dd;
+    transform: rotate(6deg) scale(1.05); 
+}
+
+.estudiante:hover .est {
+    transform: rotate(2deg) scale(1.05); 
+}
+
+.estudiante:hover p {
+    transform: rotate(2deg);
+    font-weight: bold;
+    color: #498db3;
 }
 footer {
     padding: 3px;
