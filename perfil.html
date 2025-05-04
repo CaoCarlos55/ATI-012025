@@ -7,7 +7,6 @@
     <link rel="icon" href="http://www.ciens.ucv.ve/portalasig2/favicon.ico" type="image/x-con">
     <link rel="stylesheet" href="css/style.css">
     <link rel="preload" href="conf/configES.json" as="fetch" type="application/json" crossorigin="anonymous">
-    <script type = "text/javascript" src = "js/index.js"></script>
 
     <script>
         function cambiarColor(link) {
@@ -65,11 +64,11 @@
             }
             function mostrarInterfaz(config) {
 
-                document.getElementById('color').textContent = config.color || 'Mi color favorito es:';
-                document.getElementById('libro').textContent = config.libro || 'Mi libro favorito es:';
-                document.getElementById('musica').textContent = config.musica || 'Mi estilo de música preferida:';
-                document.getElementById('video_juego').textContent = config.video_juego || 'Video juegos favoritos:';
-                document.getElementById('lenguajes').textContent = config.lenguajes || 'Lenguajes aprendidos:';
+                document.getElementById('color').textContent = config.color;
+                document.getElementById('libro').textContent = config.libro;
+                document.getElementById('musica').textContent = config.musica;
+                document.getElementById('video_juego').textContent = config.video_juego;
+                document.getElementById('lenguajes').textContent = config.lenguajes;
                 document.getElementById('email-text').textContent = config.email;
              
             }

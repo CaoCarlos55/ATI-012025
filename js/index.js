@@ -5,30 +5,36 @@ document.addEventListener('DOMContentLoaded', async () => {
     const urlParams = new URLSearchParams(window.location.search);
     let lang = (urlParams.get('lang') || 'ES').toUpperCase();
     const idiomasSoportados = ['ES', 'EN', 'PT'];
-      if (!idiomasSoportados.includes(lang)) {
-          console.warn(`Idioma "${lang}" no soportado. Usando ES por defecto.`);
-          lang = 'ES';
-      }
-      
-      const configResponse = await fetch(`conf/config${lang}.json`);
-      if (!configResponse.ok) throw new Error('Error al cargar la configuración');
-      
-      const configText = await configResponse.text();
-      const configJsonStr = configText.match(/\{[\s\S]*\}/)[0];
-      const config = JSON.parse(configJsonStr);
-      applyConfig(config);
+    if (!idiomasSoportados.includes(lang)) {
+        console.warn(`Idioma "${lang}" no soportado. Usando ES por defecto.`);
+        lang = 'ES';
+    }
+    
+    const configResponse = await fetch(`conf/config${lang}.json`);
+    if (!configResponse.ok) throw new Error('Error al cargar la configuración');
+    
+    const configText = await configResponse.text();
+    const configJsonStr = configText.match(/\{[\s\S]*\}/)[0];
+    const config = JSON.parse(configJsonStr);
+    applyConfig(config);
 
-   
-      const estudiantesResponse = await fetch('datos/index.json');
-      if (!estudiantesResponse.ok) throw new Error('Error al cargar estudiantes');
-      
-      const estudiantesText = await estudiantesResponse.text();
-      const estudiantesJsonStr = estudiantesText.match(/\[.*\]/s)[0]; 
-      const estudiantes = JSON.parse(estudiantesJsonStr);
+  
+    const estudiantesResponse = await fetch('datos/index.json');
+    if (!estudiantesResponse.ok) throw new Error('Error al cargar estudiantes');
+    
+    const estudiantesText = await estudiantesResponse.text();
+    const estudiantesJsonStr = estudiantesText.match(/\[.*\]/s)[0]; 
+    const estudiantes = JSON.parse(estudiantesJsonStr);
 
-      renderEstudiantes(estudiantes);
+    window.estudiantesData = estudiantes;
+
+    renderEstudiantes(estudiantes,config);
+
+    setupSearch(config);
+
   } catch (error) {
       console.error('Error:', error);
+      showError('Error al cargar los datos')
   }
 });
 
@@ -51,8 +57,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       'nombre': config.nombre,
       'buscar': config.buscar,
       'copyRight': config.copyRight,
-  
-
+      'sinResultado': config.sinResultado
     };
   
     for (const [id, value] of Object.entries(idMappings)) {
@@ -69,26 +74,62 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 }
 
-function renderEstudiantes(estudiantes) {
-    const listaEstudiantes = document.querySelector('.lista-estudiante');
-    if (!listaEstudiantes) return;
+function renderEstudiantes(estudiantes, config, query = '') {
+  const listaEstudiantes = document.querySelector('.lista-estudiante');
+  if (!listaEstudiantes) return;
 
-    listaEstudiantes.innerHTML = '';
-  
-    estudiantes.forEach((estudiante, index) => {
-      const estudianteElement = document.createElement('li');
-      estudianteElement.className = 'estudiante';
-  
-      estudianteElement.innerHTML = `
-        <img src="${estudiante.imagen}" 
-             alt="${estudiante.nombre}" 
-             class="est"> 
-        <p>${estudiante.nombre}</p>
-      `;
-  
-      listaEstudiantes.appendChild(estudianteElement);
-    });
+  listaEstudiantes.innerHTML = '';
+
+  const estudiantesFiltrados = query 
+    ? estudiantes.filter(e => 
+        e.nombre.toLowerCase().includes(query.toLowerCase()))
+    : estudiantes;
+
+  if (query && estudiantesFiltrados.length === 0) {
+    const sinResultado = document.createElement('li');
+    sinResultado.className = 'sin-resultado';
+    const mensaje = config.sinResultado.replace('[query]', query); 
+    sinResultado.textContent = mensaje;
+    listaEstudiantes.appendChild(sinResultado);
+    return;
   }
 
+  estudiantesFiltrados.forEach(estudiante => {
+    const estudianteElement = document.createElement('li');
+    estudianteElement.className = 'estudiante';
+
+    estudianteElement.innerHTML = `
+      <img src="${estudiante.imagen}" 
+           alt="${estudiante.nombre}" 
+           class="est"> 
+      <p>${estudiante.nombre}</p>
+    `;
+
+    listaEstudiantes.appendChild(estudianteElement);
+  });
+}
+
+function setupSearch(config) {
+  const searchInput = document.getElementById('nombre');
+  const searchButton = document.getElementById('buscar');
+  
+
+  
+  searchButton.addEventListener('click', () => {
+    renderEstudiantes(window.estudiantesData, config, searchInput.value.trim());
+  });
+  
+  searchInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+      renderEstudiantes(window.estudiantesData, config, searchInput.value.trim());
+    }
+  });
+}
+function showError(message) {
+  const errorElement = document.createElement('div');
+  errorElement.className = 'error-message';
+  errorElement.textContent = message;
+  document.body.prepend(errorElement);
+}
 
  
