@@ -2,12 +2,20 @@
 document.addEventListener('DOMContentLoaded', async () => {
   try {
       
-      const configResponse = await fetch('conf/configES.json');
+    const urlParams = new URLSearchParams(window.location.search);
+    let lang = (urlParams.get('lang') || 'ES').toUpperCase();
+    const idiomasSoportados = ['ES', 'EN', 'PT'];
+      if (!idiomasSoportados.includes(lang)) {
+          console.warn(`Idioma "${lang}" no soportado. Usando ES por defecto.`);
+          lang = 'ES';
+      }
+      
+      const configResponse = await fetch(`conf/config${lang}.json`);
       if (!configResponse.ok) throw new Error('Error al cargar la configuración');
       
       const configText = await configResponse.text();
-      const configJsonStr = configText.match(/\{.*\}/s)[0]; 
-      const config = JSON.parse(configJsonStr); 
+      const configJsonStr = configText.match(/\{[\s\S]*\}/)[0];
+      const config = JSON.parse(configJsonStr);
       applyConfig(config);
 
    

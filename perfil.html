@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Carlos Cao</title>
+    <title>Perfil</title>
     <link rel="icon" href="http://www.ciens.ucv.ve/portalasig2/favicon.ico" type="image/x-con">
     <link rel="stylesheet" href="css/style.css">
     <link rel="preload" href="conf/configES.json" as="fetch" type="application/json" crossorigin="anonymous">
@@ -18,27 +18,42 @@
             try {
                 const urlParams = new URLSearchParams(window.location.search);
                 const ci = urlParams.get('ci');
-                if (!ci) throw new Error('No se especificó CI en la URL');
+                let lang = urlParams.get('lang') || 'ES';
 
+                const idiomasSoportados = ['ES', 'EN', 'PT'];
+                if (!idiomasSoportados.includes(lang.toUpperCase())) {
+                    console.warn(`Idioma "${lang}" no soportado. Usando ES por defecto.`);
+                    lang = 'ES';
+                }
+
+                const configFile = `conf/config${lang}.json`;
+                const configResponse = await fetch(configFile);
+                if (!configResponse.ok) throw new Error(`Error al cargar configuración (${lang})`);
+                const configText = await configResponse.text();
+                const configJsonStr = configText.match(/\{[\s\S]*\}/)[0];
+                const config = JSON.parse(configJsonStr);
+
+                mostrarInterfaz(config);
                 
-                const estudiantesResponse = await fetch('datos/index.json');
-                if (!estudiantesResponse.ok) throw new Error('Error al cargar estudiantes');
-                const estudiantesText = await estudiantesResponse.text();
-                const estudiantesJsonStr = estudiantesText.match(/\[[\s\S]*\]/)[0];
-                const estudiantes = JSON.parse(estudiantesJsonStr);
+                if (ci) {
+                    const estudiantesResponse = await fetch('datos/index.json');
+                    if (!estudiantesResponse.ok) throw new Error('Error al cargar estudiantes');
+                    const estudiantesText = await estudiantesResponse.text();
+                    const estudiantesJsonStr = estudiantesText.match(/\[[\s\S]*\]/)[0];
+                    const estudiantes = JSON.parse(estudiantesJsonStr);
 
-
-                const estudiante = estudiantes.find(e => e.ci === ci);
-                if (!estudiante) throw new Error('Estudiante no encontrado');
-
-                mostrarPerfil(estudiante);
+                    const estudiante = estudiantes.find(e => e.ci === ci);
+                    if (estudiante) {
+                        mostrarPerfil(estudiante);
+                    }
+                }
 
             } catch (error) {
                 console.error('Error:', error);
                 document.getElementById('nombre-perfil').textContent = 'Error al cargar el perfil';
             }
 
-            function mostrarPerfil(estudiante, config) {
+            function mostrarPerfil(estudiante) {
 
                 document.title = estudiante.nombre;
                 document.getElementById('nombre-perfil').textContent = estudiante.nombre;
@@ -47,6 +62,16 @@
                 fotoPerfil.alt = `Foto de ${estudiante.nombre}`;
 
 
+            }
+            function mostrarInterfaz(config) {
+
+                document.getElementById('color').textContent = config.color || 'Mi color favorito es:';
+                document.getElementById('libro').textContent = config.libro || 'Mi libro favorito es:';
+                document.getElementById('musica').textContent = config.musica || 'Mi estilo de música preferida:';
+                document.getElementById('video_juego').textContent = config.video_juego || 'Video juegos favoritos:';
+                document.getElementById('lenguajes').textContent = config.lenguajes || 'Lenguajes aprendidos:';
+                document.getElementById('email-text').textContent = config.email;
+             
             }
         });
     </script>
