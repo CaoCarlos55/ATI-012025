@@ -1,25 +1,29 @@
 
 document.addEventListener('DOMContentLoaded', async () => {
-    try {
-
-      const response = await fetch('conf/configES.json');
-      if (!response.ok) throw new Error('Error al cargar la configuración');
+  try {
       
-      const config = await response.json();
+      const configResponse = await fetch('conf/configES.json');
+      if (!configResponse.ok) throw new Error('Error al cargar la configuración');
+      
+      const configText = await configResponse.text();
+      const configJsonStr = configText.match(/\{.*\}/s)[0]; 
+      const config = JSON.parse(configJsonStr); 
       applyConfig(config);
 
+   
       const estudiantesResponse = await fetch('datos/index.json');
       if (!estudiantesResponse.ok) throw new Error('Error al cargar estudiantes');
-      const estudiantes = await estudiantesResponse.json();
-      renderEstudiantes(estudiantes);
+      
+      const estudiantesText = await estudiantesResponse.text();
+      const estudiantesJsonStr = estudiantesText.match(/\[.*\]/s)[0]; 
+      const estudiantes = JSON.parse(estudiantesJsonStr);
 
-      
-      
-    } catch (error) {
+      renderEstudiantes(estudiantes);
+  } catch (error) {
       console.error('Error:', error);
-     
-    }
-  });
+  }
+});
+
 
   function applyConfig(config) {
     if (!config) return;
@@ -55,21 +59,14 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
       }
     }
-
-    
-  
-    // 3. Configuración adicional para otros elementos
-    // (Puedes agregar más lógica aquí según necesites)
 }
 
 function renderEstudiantes(estudiantes) {
     const listaEstudiantes = document.querySelector('.lista-estudiante');
     if (!listaEstudiantes) return;
-  
-    // Limpiar lista existente
+
     listaEstudiantes.innerHTML = '';
   
-    // Crear elementos para cada estudiante
     estudiantes.forEach((estudiante, index) => {
       const estudianteElement = document.createElement('li');
       estudianteElement.className = 'estudiante';

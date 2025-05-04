@@ -6,23 +6,61 @@
     <title>Carlos Cao</title>
     <link rel="icon" href="http://www.ciens.ucv.ve/portalasig2/favicon.ico" type="image/x-con">
     <link rel="stylesheet" href="css/style.css">
-    <!--Script para cambiar el color despues de darle click-->
+    <link rel="preload" href="conf/configES.json" as="fetch" type="application/json" crossorigin="anonymous">
+    <script type = "text/javascript" src = "js/index.js"></script>
+
     <script>
         function cambiarColor(link) {
             link.style.color = 'red'; 
         }
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                const urlParams = new URLSearchParams(window.location.search);
+                const ci = urlParams.get('ci');
+                if (!ci) throw new Error('No se especificó CI en la URL');
+
+                
+                const estudiantesResponse = await fetch('datos/index.json');
+                if (!estudiantesResponse.ok) throw new Error('Error al cargar estudiantes');
+                const estudiantesText = await estudiantesResponse.text();
+                const estudiantesJsonStr = estudiantesText.match(/\[[\s\S]*\]/)[0];
+                const estudiantes = JSON.parse(estudiantesJsonStr);
+
+
+                const estudiante = estudiantes.find(e => e.ci === ci);
+                if (!estudiante) throw new Error('Estudiante no encontrado');
+
+                mostrarPerfil(estudiante);
+
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('nombre-perfil').textContent = 'Error al cargar el perfil';
+            }
+
+            function mostrarPerfil(estudiante, config) {
+
+                document.title = estudiante.nombre;
+                document.getElementById('nombre-perfil').textContent = estudiante.nombre;
+                const fotoPerfil = document.getElementById('foto-perfil');
+                fotoPerfil.src = estudiante.imagen;
+                fotoPerfil.alt = `Foto de ${estudiante.nombre}`;
+
+
+            }
+        });
     </script>
 </head>
 
 <body class="perf">
    <div class="Principal">
     <div class="Cuadro-Imagen">
-        <img srcset="" sizes="(max-width: 768px) 360px, 960px" src="" alt="" class="Perfil">
+        <img id="foto-perfil" srcset="" sizes="(max-width: 768px) 360px, 960px" src="" alt="" class="Perfil">
 
     </div>
     
     <div class="Cuadro"> 
-        <h2 class="nombre"></h2>
+        <h2 id="nombre-perfil" class="nombre"></h2>
         <div class="Texto">
             <p><i id="descripcion">
             </i></p>
@@ -46,11 +84,11 @@
                 <td></td>
             </tr>
             <tr>
-                <td id="lenguajes" class="tabla-texto"><b>Lenguajes aprendidos:</b></td>
+                <td class="tabla-texto"><b id="lenguajes">Lenguajes aprendidos:</b></td>
                 <td><b></b></td>
             </tr>
         </table>
-        <p id="email" class="texto-correo">Si necesitan comunicarse conmigo me pueden escribir a: <a href="mailto:" class="correo" onclick="cambiarColor(this)"></a></p>
+        <p id="email-text" class="texto-correo">Si necesitan comunicarse conmigo me pueden escribir a:<a id="email" href="mailto:" class="correo" onclick="cambiarColor(this)"></a></p>
     </div>
    </div> 
 </body>
