@@ -188,7 +188,7 @@ section {
     margin-top: 10px;
     margin-bottom: 10px;
     width: auto;
-    height: 150px;
+    height: 140px;
     object-fit: cover;
     object-position: center;
     transition: all 0.2s ease;
@@ -321,7 +321,7 @@ footer {
     }
     
     .est {
-        height: 120px;
+        height: 110px;
     }
     
     footer{
@@ -423,7 +423,7 @@ footer {
     }
     
     .est {
-        height: 120px;
+        height: 110px;
     }
     footer{
         font-size: 0.75em;
@@ -456,11 +456,11 @@ footer {
         height: 200px;
     }
     .estudiante p{
-        font-size: 1.1em;
+        font-size: 1em;
     }
     
     .est {
-        height: 170px;
+        height: 155px;
     }
 
     footer{
@@ -487,11 +487,11 @@ footer {
         height: 200px;
     }
     .estudiante p{
-        font-size: 1.1em;
+        font-size: 1em;
     }
     
     .est {
-        height: 170px;
+        height: 155px;
     }
    
     footer{
