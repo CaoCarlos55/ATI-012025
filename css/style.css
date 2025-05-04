@@ -234,9 +234,7 @@ footer {
 
     }
 
-    .Perfil{
-        content: url(../28655925/28655925Pequena.jpg);
-    }
+
     .Cuadro-Imagen{
         width: 180px;
     }
@@ -325,28 +323,7 @@ footer {
     .est {
         height: 120px;
     }
-    .Carlos{
-        content: url(../28655925/28655925Pequena.jpg);
-    }
-    .est1{
-        content: url(../dummies/dummy1/dummyPequena.jpg) ;
-    }
-    .est2{
-        content: url(../dummies/dummy2/dummyPequena.jpg) ;
-    }
-    .est3{
-        content: url(../dummies/dummy3/dummyPequena.jpg) ;
-    }
-    .est4{
-        content: url(../dummies/dummy4/dummyPequena.jpg) ;
-    }
-    .est5{
-        content: url(../dummies/dummy5/dummyPequena.jpg) ;
-    }
-    .est6{
-        content: url(../dummies/dummy6/dummyPequena.jpg) ;
-    }
-
+    
     footer{
         font-size: 0.6em;
     }
@@ -363,9 +340,6 @@ footer {
         min-height: auto;
     }
    
-    .Perfil{
-        content: url(../28655925/28655925Pequena.jpg);
-    }
     .nombre{
         color: orange;
         font-size: 1.4em;
@@ -450,27 +424,6 @@ footer {
     
     .est {
         height: 120px;
-    }
-    .Carlos{
-        content: url(../28655925/28655925Pequena.jpg);
-    }
-    .est1{
-        content: url(../dummies/dummy1/dummyPequena.jpg) ;
-    }
-    .est2{
-        content: url(../dummies/dummy2/dummyPequena.jpg) ;
-    }
-    .est3{
-        content: url(../dummies/dummy3/dummyPequena.jpg) ;
-    }
-    .est4{
-        content: url(../dummies/dummy4/dummyPequena.jpg) ;
-    }
-    .est5{
-        content: url(../dummies/dummy5/dummyPequena.jpg) ;
-    }
-    .est6{
-        content: url(../dummies/dummy6/dummyPequena.jpg) ;
     }
     footer{
         font-size: 0.75em;

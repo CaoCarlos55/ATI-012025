@@ -6,20 +6,22 @@
     <title>ATI[UCV] 2025-1</title>
     <link rel="icon" type="image/x-con" href="http://www.ciens.ucv.ve/portalasig2/favicon.ico">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="preload" href="conf/configES.json" as="fetch" type="application/json" crossorigin="anonymous">
+    <script type = "text/javascript" src = "js/index.js"></script>
 </head>
 <body class="index">
     <header>
         <nav>
             <ul class="lista-encabezado">
                 <li class="Encabezado">
-                    <div class="ATI">ATI<small class="ucv">[UCV]</small> 2025-1</div>
+                    <div id="header-sitio" class="ATI"><small class="ucv"></small></div>
                 </li>
-                <li class="Hola">
-                    <p>Hola, Carlos Cao</p>
+                <li class="Hola" >
+                    <p id="saludo"></p>
                 </li>
                 <li class="Formulario">
-                    <input type="text" placeholder="Nombre...">
-                    <button type="submit">Buscar</button>
+                    <input id="nombre" type="text" placeholder="Nombre...">
+                    <button id="buscar" type="submit"></button>
 
                 </li>
             </ul>
@@ -29,59 +31,59 @@
     <section>
         <ul class="lista-estudiante">
             <li class="estudiante">
-                <img srcset="28655925/28655925Pequena.jpg 360w, 28655925/28655925Grande.jpeg 2448w" sizes="(max-width: 768px) 360px, 960px " src="28655925/28655925Grande.jpeg" alt="Carlos Cao" class="est Carlos" >
-                <p>Carlos Cao</p>
+                <img srcset="" sizes="" src="" alt="" class="est" >
+                <p></p>
             </li>
             <li class="estudiante">
-                <img srcset="dummies/dummy6/dummyPequena.jpg 80w, dummies/dummy6/dummyGrande.jpg 160w" sizes="(max-width: 768px) 80px,  160px" src="dummies/dummy6/dummyGrande.jpg" alt="Juan Antonio Perez" class="est est6">
-                <p>Juan Antonio Perez</p>
+                <img srcset="" sizes="" src="" alt="" class="est">
+                <p></p>
             </li>
             <li class="estudiante">
-                <img srcset="dummies/dummy3/dummyPequena.jpg 79w, dummies/dummy3/dummyGrande.jpg 158w" sizes="(max-width: 768px) 79px, 158px" src="dummies/dummy3/dummyGrande.jpg" alt="Maritza Rodriguez" class="est est3">
-                <p>Maritza Rodriguez</p>
+                <img srcset="" sizes="" src="" alt="" class="est">
+                <p></p>
             </li>
             <li class="estudiante">
-                <img srcset="dummies/dummy1/dummyPequena.jpg 95w, dummies/dummy1/dummyGrande.jpg 189w" sizes="(max-width: 768px) 95px,  189px" src="dummies/dummy1/dummyGrande.jpg" alt="Emilia Casado" class="est est1">
-                <p>Emilia Casado</p>
+                <img srcset="" sizes="" src="" alt="" class="est">
+                <p></p>
             </li>
             <li class="estudiante">
-                <img srcset="dummies/dummy4/dummyPequena.jpg 131w, dummies/dummy4/dummyGrande.jpg 262w" sizes="(max-width:768px) 131px,  262px" src="dummies/dummy4/dummyGrande.jpg" alt="Enrique Colina" class="est est4">
-                <p>Enrique Colina</p>
+                <img srcset="" sizes="" src="" alt="" class="est">
+                <p></p>
             </li>
             <li class="estudiante">
-                <img srcset="dummies/dummy2/dummyPequena.jpg 103w, dummies/dummy2/dummyGrande.jpg 205w" sizes="(max-width:768px) 105px,  205px" src="dummies/dummy2/dummyGrande.jpg" alt="Maria Elena Pinto" class="est est2">
-                <p>Maria Elena Pinto</p>
+                <img srcset="" sizes="" src="" alt="" class="est">
+                <p></p>
             </li>
             <li class="estudiante">
-                <img srcset="dummies/dummy5/dummyPequena.jpg 89w, dummies/dummy5/dummyGrande.jpg 157w" sizes="(max-width:768px) 89px,  157px" src="dummies/dummy5/dummyGrande.jpg" alt="Ronald Gutierez" class="est est5">
-                <p>Ronald Gutierez</p>
+                <img srcset="" sizes="" src="" alt="" class="est">
+                <p></p>
             </li>
             <li class="estudiante">
-                <img srcset="dummies/dummy6/dummyPequena.jpg 80w, dummies/dummy6/dummyGrande.jpg 160w" sizes="(max-width:768px) 80px,  160px" src="dummies/dummy6/dummyGrande.jpg" alt="Juan Antonio Perez" class="est est6">
-                <p>Juan Antonio Perez</p>
+                <img srcset="" sizes="" src="" alt="" class="est">
+                <p></p>
             </li>
             <li class="estudiante">
-                <img srcset="dummies/dummy3/dummyPequena.jpg 79w, dummies/dummy3/dummyGrande.jpg 158w" sizes="(max-width:768px) 79px,  158px" src="dummies/dummy3/dummyGrande.jpg" alt="Maritza Rodriguez" class="est est3">
-                <p>Maritza Rodriguez</p>
+                <img srcset="" sizes="" src="" alt="" class="est">
+                <p></p>
             </li>
             <li class="estudiante">
-                <img srcset="dummies/dummy1/dummyPequena.jpg 95w, dummies/dummy1/dummyGrande.jpg 189w" sizes="(max-width:768px) 95px,  189px" src="dummies/dummy1/dummyGrande.jpg" alt="Emilia Casado" class="est est1">
-                <p>Emilia Casado</p>
+                <img srcset="" sizes="" src="" alt="" class="est">
+                <p></p>
             </li>
             <li class="estudiante">
-                <img srcset="dummies/dummy4/dummyPequena.jpg 131w, dummies/dummy4/dummyGrande.jpg 262w" sizes="(max-width:768px) 131px,  262px" src="dummies/dummy4/dummyGrande.jpg" alt="Enrique Colina" class="est est4">
-                <p>Enrique Colina</p>
+                <img srcset="" sizes="" src="" alt="" class="est">
+                <p></p>
             </li>
             <li class="estudiante">
-                <img srcset="dummies/dummy2/dummyPequena.jpg 103w, dummies/dummy2/dummyGrande.jpg 205w" sizes="(max-width:768px) 105px,  205px" src="dummies/dummy2/dummyGrande.jpg" alt="Maria Elena Pinto" class="est est2">
-                <p>Maria Elena Pinto</p>
+                <img srcset="" sizes="" src="" alt="" class="est">
+                <p></p>
             </li>
 
         </ul>
     </section>
 
     <footer>
-        <p class="texto-footer">Copyright © 2025 Escuela de computación - 
+        <p id="copyRight" class="texto-footer">Copyright © 2025 Escuela de computación - 
             ATI. Todos los derechos reservados </p>
     </footer>
     
