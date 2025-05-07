@@ -7,73 +7,11 @@
     <link rel="icon" href="http://www.ciens.ucv.ve/portalasig2/favicon.ico" type="image/x-con">
     <link rel="stylesheet" href="css/style.css">
     <link rel="preload" href="conf/configES.json" as="fetch" type="application/json" crossorigin="anonymous">
-
-    <script>
-        function cambiarColor(link) {
-            link.style.color = 'red'; 
-        }
-
-        document.addEventListener('DOMContentLoaded', async () => {
-            try {
-                const urlParams = new URLSearchParams(window.location.search);
-                const ci = urlParams.get('ci');
-                let lang = urlParams.get('lang') || 'ES';
-
-                const idiomasSoportados = ['ES', 'EN', 'PT'];
-                if (!idiomasSoportados.includes(lang.toUpperCase())) {
-                    console.warn(`Idioma "${lang}" no soportado. Usando ES por defecto.`);
-                    lang = 'ES';
-                }
-
-                const configFile = `conf/config${lang}.json`;
-                const configResponse = await fetch(configFile);
-                if (!configResponse.ok) throw new Error(`Error al cargar configuración (${lang})`);
-                const configText = await configResponse.text();
-                const configJsonStr = configText.match(/\{[\s\S]*\}/)[0];
-                const config = JSON.parse(configJsonStr);
-
-                mostrarInterfaz(config);
-                
-                if (ci) {
-                    const estudiantesResponse = await fetch('datos/index.json');
-                    if (!estudiantesResponse.ok) throw new Error('Error al cargar estudiantes');
-                    const estudiantesText = await estudiantesResponse.text();
-                    const estudiantesJsonStr = estudiantesText.match(/\[[\s\S]*\]/)[0];
-                    const estudiantes = JSON.parse(estudiantesJsonStr);
-
-                    const estudiante = estudiantes.find(e => e.ci === ci);
-                    if (estudiante) {
-                        mostrarPerfil(estudiante);
-                    }
-                }
-
-            } catch (error) {
-                console.error('Error:', error);
-                document.getElementById('nombre-perfil').textContent = 'Error al cargar el perfil';
-            }
-
-            function mostrarPerfil(estudiante) {
-
-                document.title = estudiante.nombre;
-                document.getElementById('nombre-perfil').textContent = estudiante.nombre;
-                const fotoPerfil = document.getElementById('foto-perfil');
-                fotoPerfil.src = estudiante.imagen;
-                fotoPerfil.alt = `Foto de ${estudiante.nombre}`;
-
-
-            }
-            function mostrarInterfaz(config) {
-
-                document.getElementById('color').textContent = config.color;
-                document.getElementById('libro').textContent = config.libro;
-                document.getElementById('musica').textContent = config.musica;
-                document.getElementById('video_juego').textContent = config.video_juego;
-                document.getElementById('lenguajes').textContent = config.lenguajes;
-                document.getElementById('email-text').textContent = config.email;
-             
-            }
-        });
-    </script>
+    <script src="conf/configES.json"></script>
+    <script src="conf/configPT.json"></script>
+    <script src="conf/configEN.json"></script>
+    <script src="datos/index.json"></script>
+    <script src="js/perfil.js"></script>
 </head>
 
 <body class="perf">
@@ -92,24 +30,24 @@
 
         <table class="tabla">
             <tr>
-                <td id="color" class="tabla-texto">Mi color favorito es:</td>
-                <td></td>
+                <td id="conf_color" class="tabla-texto">Mi color favorito es:</td>
+                <td id="color_text"></td>
             </tr>
             <tr>
-                <td id="libro" class="tabla-texto">Mi libro favorito es:</td>
-                <td></td>
+                <td id="conf_libro" class="tabla-texto">Mi libro favorito es:</td>
+                <td id="libro-text"></td>
             </tr>
             <tr>
-                <td id="musica" class="tabla-texto">Mi estilo de música preferida:</td>
-                <td></td>
+                <td id="conf_musica" class="tabla-texto">Mi estilo de música preferida:</td>
+                <td id="musica-text"></td>
             </tr>
             <tr>
-                <td id="video_juego" class="tabla-texto">Video juegos favoritos:</td>
-                <td></td>
+                <td id="conf_video_juego" class="tabla-texto">Video juegos favoritos:</td>
+                <td id="video-text"></td>
             </tr>
             <tr>
-                <td class="tabla-texto"><b id="lenguajes">Lenguajes aprendidos:</b></td>
-                <td><b></b></td>
+                <td class="tabla-texto"><b id="conf_lenguajes">Lenguajes aprendidos:</b></td>
+                <td><b id="lenguaje-text"></b></td>
             </tr>
         </table>
         <p id="email-text" class="texto-correo">Si necesitan comunicarse conmigo me pueden escribir a:<a id="email" href="mailto:" class="correo" onclick="cambiarColor(this)"></a></p>

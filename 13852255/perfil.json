@@ -11,4 +11,4 @@ const perfil = {
 	"genero": "femenino",
 	"fecha_nacimiento": "17/11/1979",
 	"imagen": "13852255.png"
-}
+};

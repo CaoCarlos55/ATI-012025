@@ -14,4 +14,4 @@ const configPT = {
 	"buscar": "Procurar",
 	"saludo": "Olá",
 	"sinResultado": "Não há alunos que tenham em seu nome: [query]"
-}
+};

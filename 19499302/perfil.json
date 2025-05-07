@@ -10,5 +10,5 @@ const perfil = {
 	"genero":"femenino",
 	"fecha_nacimiento":"28/11/1990",
 	"email":"kathymcolina@gmail.com"
-}
+};
 

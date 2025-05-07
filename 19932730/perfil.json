@@ -10,4 +10,4 @@ const perfil = {
 	"ci": "9932730",
     "genero":"femenino", 
     "fecha_nacimiento":"13/09/1990"
-}
+};
