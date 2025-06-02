@@ -142,13 +142,11 @@ function mostrarError(lang) {
     const langUpper = lang.toUpperCase();
     const messages = mensajeError[langUpper] || mensajeError.ES;
     
-    // Cambiar el título de la página
     document.title = messages.title;
     
-    // Limpiar el contenido principal
     const principalDiv = document.querySelector('.Principal');
     if (principalDiv) {
-        if(lang === 'EN'){
+        if(lang.toUpperCase() === 'EN'){
             principalDiv.innerHTML = `
             <div class="error-container">
                 <h1>${messages.title}</h1>
@@ -156,7 +154,7 @@ function mostrarError(lang) {
                 <a href="index.html?lang=EN">'Go back to home'</a>
             </div>
         `;
-        }else if(lang === 'PT'){
+        }else if(lang.toUpperCase() === 'PT'){
             principalDiv.innerHTML = `
             <div class="error-container">
                 <h1>${messages.title}</h1>
