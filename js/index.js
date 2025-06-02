@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             console.warn(`Idioma "${lang}" no soportado. Usando ES por defecto.`);
             lang = 'ES';
         }
-        configurarIdioma(lang);
+        configurarIdioma(lang, perfiles);
         
 
     } catch (error) {
@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         mostrarError('Error al cargar los datos')
     }
 });
-function configurarIdioma(lang){
+function configurarIdioma(lang, perfiles){
     const idioma = document.createElement("script");
     idioma.src = `conf/config${lang}.json`;
     document.head.appendChild(idioma);

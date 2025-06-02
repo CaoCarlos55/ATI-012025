@@ -4,7 +4,7 @@ const perfil = {
 	"color": "morado",
 	"libro": ["Ogullo y Prejuicio"],
 	"musica": ["pop-rock"],
-	"videojuego": ["The sims y simcity"],
+	"video_juego": ["The sims y simcity"],
 	"lenguajes":["Java", "C++", "Javascript", "PHP"],
 	"email":"zulay.pineda.19@gmail.com",
 	"ci":"19267152",

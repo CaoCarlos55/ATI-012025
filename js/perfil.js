@@ -30,64 +30,9 @@ document.addEventListener('DOMContentLoaded', async () => {
             console.warn(`Idioma "${lang}" no soportado. Usando ES por defecto.`);
             lang = 'ES';
         }
-        configurarIdioma(lang);
+        configurarIdioma(lang, perfiles, ci);
 
-        if (ci) {
-    
-            const estudiantes = perfiles;
-            const estudiante = estudiantes.find(e => e.ci === ci);
-
-            if (!estudiante) {
-            mostrarError(lang);
-            return;
-    }
-            const info = document.createElement("script");
-            info.src = `${estudiante["ci"]}/perfil.json`;
-            document.head.appendChild(info);
-            document.head.insertBefore(info, document.head.firstChild);
-
-            if (estudiante) {
-                mostrarPerfil(estudiante);
-            }
-
-            info.onload = function(){
-                console.log("Caso 2 - this dentro de función onload (tradicional):", this);
-                document.getElementById('color_text').textContent = perfil.color;
-                document.getElementById('descripcion').textContent = perfil.descripcion;
-                document.getElementById('libro-text').textContent = perfil.libro;
-                document.getElementById('musica-text').textContent = perfil.musica;
-                document.getElementById('lenguaje-text').textContent = perfil.lenguajes.join(", ");
-                document.getElementById('video-text').textContent = perfil.video_juego;
-                
-                
-                const emailTextElement = document.getElementById('email-text');
-                const emailLinkElement = document.getElementById('email');
-
-                const textoBase = config.email; 
-                const partes = textoBase.split('[email]');
-
-                emailTextElement.innerHTML = '';
-    
-                
-                if (partes[0]) {
-                    emailTextElement.appendChild(document.createTextNode(partes[0]));
-                }
-                
-                
-                emailLinkElement.textContent = perfil.email;
-                emailLinkElement.href = `mailto:${perfil.email}`;
-                emailTextElement.appendChild(emailLinkElement);
-            
-                if (partes[1]) {
-                    emailTextElement.appendChild(document.createTextNode(partes[1]));
-                }
-            }
-            
-        }else{
-            mostrarError(lang);
-            return;
-        }
-
+        
     } catch (error) {
         const urlParams = new URLSearchParams(window.location.search);
         let lang = urlParams.get('lang') || 'ES';
@@ -95,15 +40,71 @@ document.addEventListener('DOMContentLoaded', async () => {
         mostrarError(lang);
     }
     
-    function configurarIdioma(lang){
+    function configurarIdioma(lang, perfiles,ci){
         const idioma = document.createElement("script");
         idioma.src = `conf/config${lang}.json`;
         document.head.appendChild(idioma);
         document.head.insertBefore(idioma, document.head.firstChild);
         idioma.onload = function() {
             mostrarInterfaz(config);
+            if (ci) {
+                cargarEstudiante(ci, perfiles, lang);
+            }else{
+                mostrarError(lang);
+                return;
+            }
         };
         
+    }
+    function cargarEstudiante(ci, perfiles, lang) {
+        const estudiantes = perfiles;
+        const estudiante = estudiantes.find(e => e.ci === ci);
+
+        if (!estudiante) {
+            mostrarError(lang);
+            return;
+        }
+        const info = document.createElement("script");
+        info.src = `${estudiante["ci"]}/perfil.json`;
+        document.head.appendChild(info);
+        document.head.insertBefore(info, document.head.firstChild);
+
+        if (estudiante) {
+            mostrarPerfil(estudiante);
+        }
+
+        info.onload = function(){
+            console.log("Caso 2 - this dentro de función onload (tradicional):", this);
+            document.getElementById('color_text').textContent = perfil.color;
+            document.getElementById('descripcion').textContent = perfil.descripcion;
+            document.getElementById('libro-text').textContent = perfil.libro;
+            document.getElementById('musica-text').textContent = perfil.musica;
+            document.getElementById('lenguaje-text').textContent = perfil.lenguajes.join(", ");
+            document.getElementById('video-text').textContent = perfil.video_juego;
+            
+            
+            const emailTextElement = document.getElementById('email-text');
+            const emailLinkElement = document.getElementById('email');
+
+            const textoBase = config.email; 
+            const partes = textoBase.split('[email]');
+
+            emailTextElement.innerHTML = '';
+
+            
+            if (partes[0]) {
+                emailTextElement.appendChild(document.createTextNode(partes[0]));
+            }
+            
+            
+            emailLinkElement.textContent = perfil.email;
+            emailLinkElement.href = `mailto:${perfil.email}`;
+            emailTextElement.appendChild(emailLinkElement);
+        
+            if (partes[1]) {
+                emailTextElement.appendChild(document.createTextNode(partes[1]));
+            }
+        }
     }
 
     function mostrarPerfil(estudiante) {
@@ -160,7 +161,7 @@ function mostrarError(lang) {
             <div class="error-container">
                 <h1>${messages.title}</h1>
                 <p>${messages.message}</p>
-                <a href="index.html">'Voltar para a página inicial'</a>
+                <a href="index.html?lang=PT">'Voltar para a página inicial'</a>
             </div>
         `;
         }else{
