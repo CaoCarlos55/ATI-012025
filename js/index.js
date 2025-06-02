@@ -1,4 +1,3 @@
-
 document.addEventListener('DOMContentLoaded', async () => {
     try {
         
@@ -9,32 +8,31 @@ document.addEventListener('DOMContentLoaded', async () => {
             console.warn(`Idioma "${lang}" no soportado. Usando ES por defecto.`);
             lang = 'ES';
         }
-        let config;
-        if(lang.toUpperCase()== 'PT'){
-            config = configPT;
-        }else if(lang.toUpperCase() == 'EN'){
-            config = configEN;
-        }else if(lang.toUpperCase() == 'ES'){
-            config = configES;
-        }
-        applyConfig(config);
-
-        const estudiantes = perfiles;
-
-        window.estudiantesData = estudiantes;
-
-        renderEstudiantes(estudiantes,config);
-
-        setupSearch(config);
+        configurarIdioma(lang);
+        
 
     } catch (error) {
         console.error('Error:', error);
-        showError('Error al cargar los datos')
+        mostrarError('Error al cargar los datos')
     }
 });
+function configurarIdioma(lang){
+    const idioma = document.createElement("script");
+    idioma.src = `conf/config${lang}.json`;
+    document.head.appendChild(idioma);
+    document.head.insertBefore(idioma, document.head.firstChild);
 
+    idioma.onload = function() {
+        aplicarConfiguracion(config);
+        const estudiantes = perfiles;
+        window.estudiantesData = estudiantes;
+        renderEstudiantes(estudiantes,config, lang);
+        configBusqueda(config, lang);
+    };
+    
+}
 
-function applyConfig(config) {
+function aplicarConfiguracion(config) {
     if (!config) return;
   
 
@@ -47,7 +45,7 @@ function applyConfig(config) {
     }
   
 
-    const idMappings = {
+    const mapearId = {
         'saludo': config.saludo,
         'nombre': config.nombre,
         'buscar': config.buscar,
@@ -55,7 +53,7 @@ function applyConfig(config) {
         'sinResultado': config.sinResultado
     };
   
-    for (const [id, value] of Object.entries(idMappings)) {
+    for (const [id, value] of Object.entries(mapearId)) {
         if (value) {
             const element = document.getElementById(id);
             if (element) {
@@ -69,7 +67,7 @@ function applyConfig(config) {
     }
 }
 
-function renderEstudiantes(estudiantes, config, query = '') {
+function renderEstudiantes(estudiantes, config, lang, query = '') {
     const listaEstudiantes = document.querySelector('.lista-estudiante');
     if (!listaEstudiantes) return;
 
@@ -93,34 +91,44 @@ function renderEstudiantes(estudiantes, config, query = '') {
         const estudianteElement = document.createElement('li');
         estudianteElement.className = 'estudiante';
 
-        estudianteElement.innerHTML = `
-        <img src="${estudiante.imagen}" 
-            alt="${estudiante.nombre}" 
-            class="est"> 
-        <p>${estudiante.nombre}</p>
+        // Crear enlace que envuelve todo el contenido
+        const enlacePerfil = document.createElement('a');
+        enlacePerfil.href = `perfil.html?ci=${estudiante.ci}&lang=${lang || 'ES'}`;
+        enlacePerfil.className = 'enlace-perfil';
+        
+        // Mantener el contenido original pero dentro del enlace
+        enlacePerfil.innerHTML = `
+            <img src="${estudiante.imagen}" 
+                 alt="${estudiante.nombre}" 
+                 class="est"> 
+            <p>${estudiante.nombre}</p>
         `;
 
+        estudianteElement.appendChild(enlacePerfil);
         listaEstudiantes.appendChild(estudianteElement);
     });
 }
 
-function setupSearch(config) {
-    const searchInput = document.getElementById('nombre');
-    const searchButton = document.getElementById('buscar');
+function configBusqueda(config, lang) {
+    const entrada = document.getElementById('nombre');
+    const boton = document.getElementById('buscar');
     
 
-    
-    searchButton.addEventListener('click', () => {
-        renderEstudiantes(window.estudiantesData, config, searchInput.value.trim());
+    entrada.addEventListener('input', () => {
+        renderEstudiantes(window.estudiantesData, config, lang, entrada.value.trim());
+    });
+
+    boton.addEventListener('click', () => {
+        renderEstudiantes(window.estudiantesData, config, lang, entrada.value.trim());
     });
     
-    searchInput.addEventListener('keypress', (e) => {
+    entrada.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') {
-        renderEstudiantes(window.estudiantesData, config, searchInput.value.trim());
+        renderEstudiantes(window.estudiantesData, config, lang, entrada.value.trim());
         }
     });
 }
-function showError(message) {
+function mostrarError(message) {
     const errorElement = document.createElement('div');
     errorElement.className = 'error-message';
     errorElement.textContent = message;

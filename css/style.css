@@ -195,6 +195,14 @@ section {
     cursor: pointer;
 
 }
+.enlace-perfil {
+    display: block;
+    text-decoration: none;
+    color: inherit; /* Mantiene el color original del texto */
+}
+.enlace-perfil:visited p {
+  color: #202bbc; /* Color púrpura oscuro para visitados */
+}
 .estudiante:hover {
     background-color: #99c5dd;
     transform: rotate(6deg) scale(1.05); 
