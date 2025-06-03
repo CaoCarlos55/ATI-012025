@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             console.warn(`Idioma "${lang}" no soportado. Usando ES por defecto.`);
             lang = 'ES';
         }
-        configurarIdioma(lang, perfiles);
+        configurarIdioma(lang.toUpperCase(), perfiles);
         
 
     } catch (error) {
