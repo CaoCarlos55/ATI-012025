@@ -1,14 +1,6 @@
-# Usar imagen ligera de Ubuntu con Apache preinstalado
 FROM ubuntu/apache2:latest
-
-RUN apt-get update && \
-    apt-get install -y apache2
-
-# Copiar TODOS los archivos al servidor web
+RUN apt-get update 
+RUN apt-get install -y apache2
+RUN rm var/www/html/index.html
 COPY . /var/www/html/
-
-# Exponer el puerto 80 (HTTP)
-EXPOSE 80
-
-# Iniciar Apache automáticamente
 CMD ["apache2ctl", "-D", "FOREGROUND"]
