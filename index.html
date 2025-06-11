@@ -1,91 +1,49 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ATI[UCV] 2025-1</title>
-    <link rel="icon" type="image/x-con" href="http://www.ciens.ucv.ve/portalasig2/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="http://www.ciens.ucv.ve/portalasig2/favicon.ico">
     <link rel="stylesheet" href="css/style.css">
-    <script src="datos/index.json"></script>
-    <script src = "js/index.js"></script>
 </head>
-<body class="index">
+<body>
     <header>
         <nav>
             <ul class="lista-encabezado">
                 <li class="Encabezado">
                     <div id="header-sitio" class="ATI"><small class="ucv"></small></div>
                 </li>
-                <li class="Hola" >
+                <li class="Hola">
                     <p id="saludo"></p>
                 </li>
                 <li class="Formulario">
                     <input id="nombre" type="text" placeholder="Nombre...">
-                    <button id="buscar" type="submit"></button>
-
+                    <button id="buscar" type="submit">Buscar</button>
+                </li>
+                <li class="idioma-selector">
+                    <select id="lang-selector">
+                        <option value="ES">ES</option>
+                        <option value="EN">EN</option>
+                        <option value="PT">PT</option>
+                    </select>
                 </li>
             </ul>
         </nav>
     </header>
 
-    <section>
-        <ul class="lista-estudiante">
-            <li class="estudiante">
-                <img srcset="" sizes="" src="" alt="" class="est" >
-                <p></p>
-            </li>
-            <li class="estudiante">
-                <img srcset="" sizes="" src="" alt="" class="est">
-                <p></p>
-            </li>
-            <li class="estudiante">
-                <img srcset="" sizes="" src="" alt="" class="est">
-                <p></p>
-            </li>
-            <li class="estudiante">
-                <img srcset="" sizes="" src="" alt="" class="est">
-                <p></p>
-            </li>
-            <li class="estudiante">
-                <img srcset="" sizes="" src="" alt="" class="est">
-                <p></p>
-            </li>
-            <li class="estudiante">
-                <img srcset="" sizes="" src="" alt="" class="est">
-                <p></p>
-            </li>
-            <li class="estudiante">
-                <img srcset="" sizes="" src="" alt="" class="est">
-                <p></p>
-            </li>
-            <li class="estudiante">
-                <img srcset="" sizes="" src="" alt="" class="est">
-                <p></p>
-            </li>
-            <li class="estudiante">
-                <img srcset="" sizes="" src="" alt="" class="est">
-                <p></p>
-            </li>
-            <li class="estudiante">
-                <img srcset="" sizes="" src="" alt="" class="est">
-                <p></p>
-            </li>
-            <li class="estudiante">
-                <img srcset="" sizes="" src="" alt="" class="est">
-                <p></p>
-            </li>
-            <li class="estudiante">
-                <img srcset="" sizes="" src="" alt="" class="est">
-                <p></p>
-            </li>
+    <main id="app-container">
 
-        </ul>
-    </section>
+        <section>
+            <ul class="lista-estudiante">
+            </ul>
+        </section>
+    </main>
 
     <footer>
-        <p id="copyRight" class="texto-footer">Copyright © 2025 Escuela de computación - 
-            ATI. Todos los derechos reservados </p>
+        <p id="copyRight" class="texto-footer">Copyright © 2025 Escuela de computación - ATI. Todos los derechos reservados</p>
     </footer>
-    
+
+    <script src="js/spa-app.js"></script>
 </body>
 </html>

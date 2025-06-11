@@ -1,4 +1,4 @@
-const config = {
+{
 	"sitio": ["ATI","[UCV]","2025-1"],
 	"home": "Início",
 	"login": "Sessão",
@@ -14,4 +14,4 @@ const config = {
 	"buscar": "Procurar",
 	"saludo": "Olá",
 	"sinResultado": "Não há alunos que tenham em seu nome: [query]"
-};
+}
