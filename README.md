@@ -52,7 +52,7 @@ Algunos comandos extras que nos ayudan controlar la ejecución en el docker.
 Si deseas detener el contenedor en ejecución, utilizamos el siguiente comando:
 
 ```bash
-docker stop servidor-web-28655925
+docker stop servidor
 ```
 
 ##### 5.2 Reiniciar el contenedor
@@ -60,19 +60,19 @@ docker stop servidor-web-28655925
 Si deseas volver a iniciar el contenedor, utilizamos el siguiente comando:
 
 ```bash
-docker start servidor-web-28655925
+docker start servidor
 ```
 ##### 5.3 Eliminar el contenedor
 
 Si deseas eliminar el contenedor, utilizamos el siguiente comando:
 
 ```bash
-docker rm servidor-web-28655925
+docker rm servidor
 ```
 ##### 5.4 Eliminar la imagen
 
 Si deseas eliminar la imagen, utilizamos el siguiente comando:
 
 ```bash
-docker rmi proyecto-ati-28655925
+docker rmi contenedorcarloscao
 ```
