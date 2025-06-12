@@ -37,15 +37,11 @@ Este comando, inicia el contenedor en segundo plano, asignandole el nombre `serv
 
 Despues de ejecutar el contenedor, ya se encontrara disponible el acceso la web con las siguiente direcciones:
 
-##### 4.1 Web por defecto(Español): http://localhost:8080 
+##### 4.1 Web por defecto: http://localhost:8080 
 
-##### 4.2 Web en español: http://localhost:8080/index.html?lang=ES
+##### 4.2 http://localhost:8080/ATI
 
-Este sirve para el caso en el de ingreses al index en español pero quieras cambiar el idioma en el enlace, sin tener que escribir el nombre del archivo.
-
-##### 4.3 Web en ingles: http://localhost:8080/index.html?lang=EN
-
-##### 4.4 Web en portugues: http://localhost:8080/index.html?lang=PT
+##### 4.3 http://localhost:8080/ATI/index.py redirige a la pagina index.html
 
 ### 5. Comando extras:
 
