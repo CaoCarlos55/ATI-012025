@@ -4,100 +4,98 @@ from beaker.middleware import SessionMiddleware
 from beaker.cache import CacheManager
 from beaker.util import parse_cache_config_options
 
-# Configuración de la caché (opcional, pero útil para datos que no cambian a menudo)
 cache_opts = {
     'cache.type': 'memory',
-    'cache.expire': 3600  # 1 hora
+    'cache.expire': 3600
 }
 cache = CacheManager(**parse_cache_config_options(cache_opts))
 
-# Configuración de las sesiones
 session_opts = {
     'session.type': 'file',
     'session.cookie_expires': True,
-    'session.data_dir': '/tmp/sessions', # Asegúrate de que este directorio exista y sea escribible
+    'session.data_dir': '/tmp/sessions',
     'session.auto': True
 }
 
-# Ruta base de la aplicación (donde se encuentran los archivos)
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-HTML_FILE = os.path.join(BASE_DIR, 'index.html')
+INDEX_HTML_PATH = os.path.join(BASE_DIR, 'index.html')
+
+def get_mime_type(file_path):
+    if file_path.endswith('.html'):
+        return 'text/html'
+    elif file_path.endswith('.css'):
+        return 'text/css'
+    elif file_path.endswith('.js'):
+        return 'application/javascript'
+    elif file_path.endswith('.json'):
+        return 'application/json'
+    elif file_path.endswith(('.jpg', '.jpeg')):
+        return 'image/jpeg'
+    elif file_path.endswith('.png'):
+        return 'image/png'
+    elif file_path.endswith('.ico'):
+        return 'image/x-icon'
+    else:
+        return 'application/octet-stream' 
 
 def application(environ, start_response):
-    path = environ.get('PATH_INFO', '/')
-    method = environ.get('REQUEST_METHOD', 'GET')
-    session = environ['beaker.session'] # Accede a la sesión
 
-    # Definir el directorio de archivos estáticos
-    static_dirs = {
-        '/css/': os.path.join(BASE_DIR, 'css'),
-        '/js/': os.path.join(BASE_DIR, 'js'),
-        '/datos/': os.path.join(BASE_DIR, 'datos'),
-        '/conf/': os.path.join(BASE_DIR, 'conf'),
-        '/perfiles/': os.path.join(BASE_DIR, 'perfiles'),
-        '/favicon.ico': os.path.join(BASE_DIR, 'favicon.ico')
-    }
+    script_name = environ.get('SCRIPT_NAME', '') 
+    path_info = environ.get('PATH_INFO', '') 
 
-    # Intentar servir archivos estáticos (CSS, JS, imágenes, JSONs de datos/config)
-    for prefix, static_dir_path in static_dirs.items():
-        if path.startswith(prefix):
-            file_path = os.path.join(static_dir_path, path[len(prefix):])
-            
-            # Si es favicon.ico y el path es exactamente ese, ajustarlo
-            if path == '/favicon.ico':
-                file_path = os.path.join(BASE_DIR, 'favicon.ico')
+    full_path_requested = script_name + path_info
 
-            if os.path.exists(file_path) and os.path.isfile(file_path):
-                # Determinar el tipo de contenido (MIME type)
-                if file_path.endswith('.css'):
-                    content_type = 'text/css'
-                elif file_path.endswith('.js'):
-                    content_type = 'application/javascript'
-                elif file_path.endswith('.json'):
-                    content_type = 'application/json'
-                elif file_path.endswith('.jpg') or file_path.endswith('.jpeg'):
-                    content_type = 'image/jpeg'
-                elif file_path.endswith('.png'):
-                    content_type = 'image/png'
-                elif file_path.endswith('.ico'):
-                    content_type = 'image/x-icon'
-                else:
-                    content_type = 'application/octet-stream' # Tipo genérico
+    session = environ['beaker.session'] 
 
-                status = '200 OK'
-                headers = [('Content-Type', content_type)]
-                with open(file_path, 'rb') as f:
-                    response_body = f.read()
-                start_response(status, headers)
-                return [response_body]
+    if 'visit_count' not in session:
+        session['visit_count'] = 0
+    session['visit_count'] += 1
+    print(f"Sesión activa. Visitas: {session['visit_count']}")
+    session.save() 
+    
+    relative_file_path = full_path_requested[len(script_name):]
+    
+    if relative_file_path == '/' or relative_file_path == '':
+        file_to_serve = INDEX_HTML_PATH
+    else:
+        file_to_serve = os.path.join(BASE_DIR, relative_file_path.lstrip('/'))
 
-    # Lógica para la página principal (index.html)
-    # Servir siempre index.html para la SPA, ya que el enrutamiento lo hace el JS
-    if path == '/' or path.startswith('/perfil/'): # El JS manejará el enrutamiento SPA
+    if relative_file_path == 'favicon.ico':
+        file_to_serve = os.path.join(BASE_DIR, 'favicon.ico')
+
+    if os.path.exists(file_to_serve) and os.path.isfile(file_to_serve):
+        status = '200 OK'
+        headers = [('Content-Type', get_mime_type(file_to_serve))]
         try:
-            with open(HTML_FILE, 'rb') as f:
+            with open(file_to_serve, 'rb') as f:
                 response_body = f.read()
-            status = '200 OK'
-            headers = [('Content-Type', 'text/html')]
-            
-            # Ejemplo de cómo usar una cookie (establece una cookie simple)
-            # Aunque tu JS ya maneja las cookies, esto es para demostrar la capacidad de Python
-            if 'my_app_cookie' not in environ.get('HTTP_COOKIE', ''):
-                headers.append(('Set-Cookie', 'my_app_cookie=bienvenido; Path=/'))
-            
             start_response(status, headers)
             return [response_body]
-        except FileNotFoundError:
-            status = '404 Not Found'
+        except Exception as e:
+            print(f"Error al leer el archivo {file_to_serve}: {e}")
+            status = '500 Internal Server Error'
             headers = [('Content-Type', 'text/plain')]
             start_response(status, headers)
-            return [b'Error: index.html no encontrado.']
+            return [b'Error interno del servidor al servir el archivo.']
+    else:
 
-    # Si no se encuentra ninguna ruta, devolver 404
+        if path_info.startswith('/perfil/') or path_info == '':
+            try:
+                with open(INDEX_HTML_PATH, 'rb') as f:
+                    response_body = f.read()
+                status = '200 OK'
+                headers = [('Content-Type', 'text/html')]
+                start_response(status, headers)
+                return [response_body]
+            except FileNotFoundError:
+                status = '404 Not Found'
+                headers = [('Content-Type', 'text/plain')]
+                start_response(status, headers)
+                return [b'Error: index.html no encontrado.']
+
     status = '404 Not Found'
     headers = [('Content-Type', 'text/plain')]
     start_response(status, headers)
-    return [b'No encontrado']
+    return [b'Recurso no encontrado.']
 
-# Envuelve la aplicación WSGI con Beaker para las sesiones
 application = SessionMiddleware(application, session_opts)
