@@ -27,9 +27,7 @@ RUN a2enconf servername
 
 RUN mkdir -p /var/www/ATI
 
-RUN git clone -b Reto-7 https://github.com/CaoCarlos55/ATI-012025.git /var/www/ATI_temp && \
-    (cd /var/www/ATI_temp && shopt -s dotglob && mv * /var/www/ATI/) && \
-    rm -rf /var/www/ATI_temp
+RUN git clone -b Reto-7 https://github.com/CaoCarlos55/ATI-012025.git /var/www/ATI
 
 RUN mkdir -p /tmp/sessions && chmod 777 /tmp/sessions
 
