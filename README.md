@@ -39,7 +39,7 @@ Despues de ejecutar el contenedor, ya se encontrara disponible el acceso la web 
 
 ##### 4.1 Web por defecto: http://localhost:8080 
 
-##### 4.2 http://localhost:8080/ATI
+##### 4.2 http://localhost:8080/ATI/
 
 ##### 4.3 http://localhost:8080/ATI/index.py redirige a la pagina index.html
 
