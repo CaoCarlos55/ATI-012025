@@ -19,7 +19,7 @@ Para ejecutar el proyecto en una web, es necesario descargar o clonar el reposit
 Una vez ubicado en la carpeta del proyecto que contiene el dockerfile, ejecutamos el siguiente comando:
 
 ```bash
-docker build -t proyecto-ati-28655925 .
+docker build -t contenedocarloscao .
 ```
 Este comando construira una imagen Dcoker con el nombre `proyecto-ati-28655925`. Si quieres visualizar que en efecto se haya construido la imagen Docker, puedes utilizar el comando `docker images` para visualizar todas las imagenes.
 
@@ -28,7 +28,7 @@ Este comando construira una imagen Dcoker con el nombre `proyecto-ati-28655925`.
 Despues de construir la imagen, podemos iniciar un contenedor basado en la imagen con el siguiente comando:
 
 ```bash
-docker run -tid --name servidor-web-28655925 -p 8080:80 proyecto-ati-28655925
+docker run -tid --name servidor -p 8080:80 contenedorcarloscao
 ```
 
 Este comando, inicia el contenedor en segundo plano, asignandole el nombre `servidor-web-28655925` y exponiendo el puerto 80 del contenedor en el puerto 8080 de nuestra maquina local.
