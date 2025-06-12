@@ -12,16 +12,16 @@ Es necesario tener Docker instalado en el sistema.
 
 ### 1. Preparar el entorno para ejecutar
 
-Para ejecutar el proyecto en una web, es necesario descargar o clonar el repositorio en su PC. Luego desde la terminal navegar hasta la carpeta donde se encuentra el proyecto y el dockerfile.
+Descargar el dockerfile
 
 ### 2. Construir la imagen del Docker
 
 Una vez ubicado en la carpeta del proyecto que contiene el dockerfile, ejecutamos el siguiente comando:
 
 ```bash
-docker build -t contenedocarloscao .
+docker build -t contenedorcarloscao .
 ```
-Este comando construira una imagen Dcoker con el nombre `proyecto-ati-28655925`. Si quieres visualizar que en efecto se haya construido la imagen Docker, puedes utilizar el comando `docker images` para visualizar todas las imagenes.
+Este comando construira una imagen Dcoker con el nombre `contenedorcarloscao`. Si quieres visualizar que en efecto se haya construido la imagen Docker, puedes utilizar el comando `docker images` para visualizar todas las imagenes.
 
 ### 3. Ejecutar el contenedor
 
@@ -31,7 +31,7 @@ Despues de construir la imagen, podemos iniciar un contenedor basado en la image
 docker run -tid --name servidor -p 8080:80 contenedorcarloscao
 ```
 
-Este comando, inicia el contenedor en segundo plano, asignandole el nombre `servidor-web-28655925` y exponiendo el puerto 80 del contenedor en el puerto 8080 de nuestra maquina local.
+Este comando, inicia el contenedor en segundo plano, asignandole el nombre `servidor` y exponiendo el puerto 80 del contenedor en el puerto 8080 de nuestra maquina local.
 
 ### 4. Acceder a la web
 
